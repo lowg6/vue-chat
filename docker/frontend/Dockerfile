@@ -1,5 +1,7 @@
 FROM node:11
 
-RUN npm install --global @vue/cli
+RUN npm install -g @vue/cli
 
-WORKDIR /app
+WORKDIR /var/www/frontend
+
+# after it. `yarn serve` manually.

@@ -7,14 +7,33 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - .:/frontend
+      - ./frontend:/var/www/html
+    restart: always
     tty: true
-  
+
   backend:
     container_name: 'vue-chat-backend'
     build: ./docker/backend
     ports:
       - 8081:8081
     volumes:
-      - .:/backend
+      - ./backend:/var/www/html
+    environment:
+      TZ: Asia/Tokyo
+    restart: always
+    tty: true
+
+  db:
+    container_name: 'vue-chat-db'
+    build: ./docker/db
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: vue-chat
+    restart: always
     tty: true
